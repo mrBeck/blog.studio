@@ -3,6 +3,7 @@
 require_once('../includes/config.php');
 
 ?>
+<?php include('menu.php');?>
 <form action="" method="post">
 <p><label>Username</label><input type="text" name="username" value=""  /></p>
 <p><label>Password</label><input type="password" name="password" value=""  /></p>

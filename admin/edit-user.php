@@ -4,102 +4,102 @@ require_once('../includes/config.php');
 //if not logged in redirect to login page
 if(!$user->is_logged_in()){ header('Location: login.php'); }
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Admin - Edit User</title>
-  <link rel="stylesheet" href="../style/normalize.css">
-  <link rel="stylesheet" href="../style/main.css">
-</head>
-<body>
 
-<div id="wrapper">
+<?php include('menu.php');?>
+<p><a href="users.php">User Admin Index</a></p>
 
-	<?php include('menu.php');?>
-	<p><a href="users.php">User Admin Index</a></p>
-
-	<h2>Edit User</h2>
+<h2>Edit User</h2>
 
 
-	<?php
+<?php
 
-	//if form has been submitted process it
-	if(isset($_POST['submit'])){
+//if form has been submitted process it
+if(isset($_POST['submit']))
+{
 
-		//collect form data
-		extract($_POST);
+    //collect form data
+    extract($_POST);
 
-		//very basic validation
-		if($username ==''){
-			$error[] = 'Please enter the username.';
-		}
+    //very basic validation
+    if($username =='')
+    {
+        $error[] = 'Please enter the username.';
+    }
 
-		if( strlen($password) > 0){
+    if( strlen($password) > 0)
+    {
 
-			if($password ==''){
-				$error[] = 'Please enter the password.';
-			}
+        if($password =='')
+        {
+            $error[] = 'Please enter the password.';
+        }
 
-			if($passwordConfirm ==''){
-				$error[] = 'Please confirm the password.';
-			}
+        if($passwordConfirm =='')
+        {
+            $error[] = 'Please confirm the password.';
+        }
 
-			if($password != $passwordConfirm){
-				$error[] = 'Passwords do not match.';
-			}
+        if($password != $passwordConfirm)
+        {
+            $error[] = 'Passwords do not match.';
+        }
 
-		}
-		
-
-		if($email ==''){
-			$error[] = 'Please enter the email address.';
-		}
-
-		if(!isset($error)){
-
-			try {
-
-				if(isset($password)){
-
-					$hashedpassword = $user->create_hash($password);
-
-					//update into database
-					$stmt = $db->prepare('UPDATE blog_members SET username = :username, password = :password, email = :email WHERE memberID = :memberID') ;
-					$stmt->execute(array(
-						':username' => $username,
-						':password' => $hashedpassword,
-						':email' => $email,
-						':memberID' => $memberID
-					));
+    }
 
 
-				} else {
+    if($email =='')
+    {
+        $error[] = 'Please enter the email address.';
+    }
 
-					//update database
-					$stmt = $db->prepare('UPDATE blog_members SET username = :username, email = :email WHERE memberID = :memberID') ;
-					$stmt->execute(array(
-						':username' => $username,
-						':email' => $email,
-						':memberID' => $memberID
-					));
+    if(!isset($error)){
 
-				}
-				
+        try {
 
-				//redirect to index page
-				header('Location: users.php?action=updated');
-				exit;
+            if(isset($password))
+            {
 
-			} catch(PDOException $e) {
-			    echo $e->getMessage();
-			}
+                $hashedpassword = $user->create_hash($password);
 
-		}
+                //update into database
+                $stmt = $db->prepare('UPDATE blog_members SET username = :username, password = :password, email = :email WHERE memberID = :memberID') ;
+                $stmt->execute(array
+                                    (
+                                          ':username' => $username
+                                        , ':password' => $hashedpassword
+                                        , ':email' => $email
+                                        , ':memberID' => $memberID
+                                    ));
 
-	}
 
-	?>
+            } else {
+
+                //update database
+                $stmt = $db->prepare('UPDATE blog_members SET username = :username, email = :email WHERE memberID = :memberID') ;
+                $stmt->execute(array
+                                    (
+                                          ':username' => $username
+                                        , ':email' => $email
+                                        , ':memberID' => $memberID
+                                    ));
+
+            }
+
+
+            //redirect to index page
+            header('Location: users.php?action=updated');
+            exit;
+
+        } catch(PDOException $e) 
+        {
+            echo $e->getMessage();
+        }
+
+    }
+
+}
+
+?>
 
 
 	<?php
@@ -135,7 +135,7 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 		<input type='password' name='passwordConfirm' value=''></p>
 
 		<p><label>Email</label><br />
-		<input type='text' name='email' value='<?php echo $row['email'];?>'></p>
+		<input type='email' name='email' value='<?php echo $row['email'];?>'></p>
 
 		<p><input type='submit' name='submit' value='Update User'></p>
 

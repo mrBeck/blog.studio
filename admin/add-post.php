@@ -19,8 +19,8 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
     
     <p><input type="submit" name="submit" value="Submit"></p>
 </form>
-<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 
+<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 
 <script>
         tinymce.init({
@@ -38,7 +38,8 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 	<?php
 
 	//if form has been submitted process it
-	if(isset($_POST['submit'])){
+	if(isset($_POST['submit']))
+    {
 
 		$_POST = array_map( 'stripslashes', $_POST );
 
@@ -88,4 +89,5 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 			echo '<p class="error">'.$error.'</p>';
 		}
 	}
-	?>
+?>
+

@@ -1,11 +1,5 @@
-<?php
-//include config
-require('includes/config.php');
 
-?>
-
-
-<h3>Add a comment</h3>
+<h3>You want to leave a comment ?</h3>
 
 
 <form action='' method='post'>
@@ -52,15 +46,16 @@ require('includes/config.php');
 			try {
 
 				//insert into database
-				$stmt = $db->prepare('INSERT INTO comments (name, postDate, comment) VALUES (:name, :postDate, :comment)') ;
-				$stmt->execute(array(
+				$stmt = $db->prepare('INSERT INTO comments (name, postDate, comment, postID) VALUES (:name, :postDate, :comment, :postID)') ;
+                    $stmt->execute(array(
 					':name' => $name,
 					':postDate' => date('Y-m-d H:i:s'),
-                    ':comment' => $comment
+                    ':comment' => $comment,
+                    ':postID' => $_GET['id']
 				));
 
 				//redirect to index page
-				header('Location: comments.php?action=added');
+				header('Location: viewpost.php?id=action=added');
 				exit;
 
 			} catch(PDOException $e) 
@@ -93,7 +88,8 @@ require('includes/config.php');
 <?php
     try
     {
-        $stmt = $db->query('SELECT commID, name, postDate, comment FROM comments ORDER BY commID DESC');
+        $stmt = $db->prepare('SELECT commID, name, postDate, comment FROM comments WHERE postID = :postID');
+        $stmt->execute(array(':postID' => $_GET['id']));
         while($row = $stmt->fetch())
         {
             echo '<tr>';

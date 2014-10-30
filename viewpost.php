@@ -6,7 +6,7 @@ $row = $stmt->fetch();
 
 //if post does not exists redirect user.
 if($row['postID'] == ''){
-	header('Location: ./');
+	header('Location: index.php');
 	exit;
 }
 

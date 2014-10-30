@@ -11,46 +11,18 @@ require('includes/config.php');
 <form action='' method='post'>
 
 	<p><label>Name</label><br />
-    <input type='hidden' name='postID' value='<?php echo $row['postID'];?>'>
-	<input type='text' name='name' value='<?php { echo $_POST['name'];}?>'></p>
+    <input type='hidden' name='postID' value='<?php if(isset($error)){ echo $row['postID'];}?>'>
+        
+	<input type='text' name='name' value='<?php if(isset($error)){ echo $_POST['name'];}?>'></p>
 
 	<p><label>Comment</label><br />
-	<textarea name='postDesc' cols='50' rows='5'><?php { echo $_POST['comment'];}?></textarea></p>
+	<textarea name='comment' cols='50' rows='5'><?php if(isset($error)){ echo $_POST['comment'];}?></textarea></p>
 
 	<p><input type='submit' name='submit' value='Post Comment'></p>
 
 </form>
 
 
-
-
-
-<table>
-    <tr>
-    <th>Comment</th> 
-    <th>Date</th> 
-    <th>Action</th> 
-    </tr>
-<?php
-    try
-    {
-        $stmt = $db->query('SELECT commID, name, postDate, comment FROM comments ORDER BY commID DESC');
-        while($row = $stmt->fetch())
-        {
-            echo '<tr>';
-            echo '<td>'.date('jS M Y', strtotime($row['postDate'])).'</td>';
-            echo '<td>'.$row['name'].'</td>';
-            echo '<td>'.$row['comment'].'</td>';
-
-            echo '</tr>';
-        }
-
-
-    } catch(PDOException $e)
-        {
-            echo $e->getMessage();
-        }
-?>
     
 <?php
 
@@ -64,12 +36,12 @@ require('includes/config.php');
 		extract($_POST);
 
 		//very basic validation
-		if(name =='')
+		if($name =='')
         {
 			$error[] = 'Please enter the name.';
 		}
 
-		if(comment =='')
+		if($comment =='')
         {
 			$error[] = 'Please enter the comment.';
 		}
@@ -80,15 +52,15 @@ require('includes/config.php');
 			try {
 
 				//insert into database
-				$stmt = $db->prepare('INSERT INTO comments (name,postDate,comment) VALUES (:name, :postDate, :comment)') ;
+				$stmt = $db->prepare('INSERT INTO comments (name, postDate, comment) VALUES (:name, :postDate, :comment)') ;
 				$stmt->execute(array(
-					':name' => name,
+					':name' => $name,
 					':postDate' => date('Y-m-d H:i:s'),
-                    ':comment' => comment
+                    ':comment' => $comment
 				));
 
 				//redirect to index page
-				header('Location: viewpost.php?action=addedcom');
+				header('Location: comments.php?action=added');
 				exit;
 
 			} catch(PDOException $e) 
@@ -107,4 +79,34 @@ require('includes/config.php');
 			echo '<p class="error">'.$error.'</p>';
 		}
 	}
+?>
+
+
+<h2>Older comments</h2>
+
+<table>
+    <tr>
+    <th>Date</th> 
+    <th>Name</th>
+    <th>Comment</th>
+    </tr>
+<?php
+    try
+    {
+        $stmt = $db->query('SELECT commID, name, postDate, comment FROM comments ORDER BY commID DESC');
+        while($row = $stmt->fetch())
+        {
+            echo '<tr>';
+            echo '<td>'.date('jS M Y H:i:s', strtotime($row['postDate'])).'</td>';
+            echo '<td>'.$row['name'].'</td>';
+            echo '<td>'.$row['comment'].'</td>';
+
+            echo '</tr>';
+        }
+
+
+    } catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
 ?>

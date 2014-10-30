@@ -23,4 +23,6 @@ if($row['postID'] == ''){
 				echo '<p>Posted on '.date('jS M Y', strtotime($row['postDate'])).'</p>';
 				echo '<p>'.$row['postCont'].'</p>';				
 			echo '</div>';
-		?>
+?>
+
+<?php include('comments.php'); ?>

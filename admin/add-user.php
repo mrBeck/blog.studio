@@ -68,7 +68,7 @@ if(isset($_POST['submit']))
         $stmt->execute(array
                        (
                              ':username' => $username
-                           , ':password' => $password
+                           , ':password' => $hashedpassword
                            , ':email' => $email
                        ));
         header('Location: users.php?action=added');

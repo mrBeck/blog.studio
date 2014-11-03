@@ -1,2 +1,66 @@
 
-.clear{clear:both;}
+.clear{
+  clear:both;
+}
+
+.shadow{
+  box-shadow:0px 10px 15px 0px #ababab;
+}
+
+h1{
+  font-family: cursive;
+}
+
+nav>p{
+  color:#000;
+  font-size: 50px;
+  text-decoration:uppercase;
+  font-family: cursive;
+}
+
+body {
+     margin: 0;
+     background: url(../img/paper.png);
+     background-size: 412px 300px;
+     background-repeat: repeat;
+   }
+
+
+.nav{
+  position: absolute;
+  z-index:-1;
+  top:10px;
+  font-weight:bold;
+  text-decoration: uppercase !important;
+  float: right;
+  display : inline-block;
+}
+nav>ul>li{
+  font-size: 14px;
+  text-decoration: uppercase;
+  font-family: cursive;  
+}
+.bata, .bata2{
+  display: none;
+}
+
+@media screen and (min-width: 1680px){
+
+  .bata{
+    z-index:-1;
+    display:inline-block;
+    position:absolute;
+    left:1550px;
+    top: 80px;
+
+  }
+  .bata2{
+     z-index:-1;
+     display:inline-block;
+     position:absolute;
+     left:10px;
+     top:70px;
+  }
+
+
+}

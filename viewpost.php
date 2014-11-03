@@ -12,19 +12,11 @@ if($row['postID'] == ''){
 }
 
 ?>
-
-		<div class="">
-        	<h1 class="col-md-12 alert alert-success" role="alert">Blog</h1>
-    	</div>
-		<hr />
-		<p><a class="btn btn-primary" role="button"  href="index.php">Blog Index</a></p>
-
-
-			
-		<div class="alert alert-inactive">
+	
+		<div class="alert alert-danger col-lg-12 shadow">
 			<h1><?=$row['postTitle']?></h1>
 		</div>
-		<div class="well well-lg col-lg-8">
+		<div class="well well-lg col-lg-12 shadow">
 			<p>Posted on <?=date('jS M Y', strtotime($row['postDate']))?></p>
 			<p><?=$row['postCont']?></p>			
 		</div>

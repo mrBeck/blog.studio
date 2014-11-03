@@ -1,25 +1,26 @@
-<div class="col-md-6">
-	<h3 class="alert alert-danger">You want to leave a comment ?</h3>
+<div class="row">	
+	<div class="col-md-6">
+		<h3 class="alert alert-danger">You want to leave a comment ?</h3>
 
 
-	<form method="post">
-			<div class="input-group input-group-lg col-lg-8 col-md-8 col-sm-4">
-				<span class="input-group-addon">Name</span>
-			  	<input type="hidden" name="postID" value="<?php if(isset($error)){ echo $row['postID'] ;}?>"/>
-		    	<input class="form-control" placeholder="enter your name..." type="text" name="name" value="<?php if(isset($error)){ echo $_POST['name'];}?>"/>
-			</div>
-	    
-	      
-			<div class="col-lg-8 col-sm-8">
-				<div class="row">
-					<h4>Enter comment below:</h4>
-					<textarea name="comment" cols="50" rows="5"><?php if(isset($error)){ echo $_POST['comment'];}?></textarea>
-					<input type="button" class="btn btn-primary" name="submit" value="Post Comment"/>
-				</div>	
-			</div>
-	</form>
+		<form method="post">
+				<div class="input-group input-group-lg col-lg-8 col-md-8 col-sm-4">
+					<span class="input-group-addon">Name</span>
+				  	<input type="hidden" name="postID" value="<?php if(isset($error)){ echo $row['postID'] ;}?>"/>
+			    	<input class="form-control" placeholder="enter your name..." type="text" name="name" value="<?php if(isset($error)){ echo $_POST['name'];}?>"/>
+				</div>
+		    
+		      
+				<div class="col-lg-8 col-sm-8">
+					
+						<h4>Enter comment below:</h4>
+						<textarea name="comment" cols="50" rows="5"><?php if(isset($error)){ echo $_POST['comment'];}?></textarea>
+						<input type="button" class="btn btn-primary" name="submit" value="Post Comment"/>
+					
+				</div>
+		</form>
+	</div>
 </div>
-
     
 <?php
 
@@ -80,7 +81,7 @@
 	}
 ?>
 
-
+		
 		<div class="panel panel-default clear">
 			<div class="panel-heading"><h3>Older Comments</h3></div>
 				<table class="table">
